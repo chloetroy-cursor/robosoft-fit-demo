@@ -10,6 +10,8 @@ The live GitHub target for customers is intended to be **[chloetroy-cursor/robos
 | --- | --- |
 | [`prospect-site/index.html`](prospect-site/index.html) | Static marketing page. No build. Intentional gaps for the scout. |
 | [`prototype/`](prototype/) | Vite + React + TypeScript onboarding redesign: welcome → connect tools → first dashboard. |
+| [Figma file](https://www.figma.com/design/IAQuUlgWS7qdViPMqbAzsD) | **Northstar Ledger — Brand + Onboarding** (Cover, Tokens, Components, Flows). |
+| [`figma/`](figma/) | Token JSON, star SVG, and a spec that mirrors that file. |
 
 ## Demo flow
 
@@ -18,7 +20,7 @@ The live GitHub target for customers is intended to be **[chloetroy-cursor/robos
 3. **Human `fit: yes`** — A person confirms the account is worth a prototype. That gate is the point; the bot does not ship work on its own.
 4. **Cursor Cloud Agent prototypes** — Agent builds or iterates `prototype/` from the scout notes (this repo is that output).
 5. **Design Mode** — Restyle the onboarding shell in the IDE against the running Vite app.
-6. **Figma source of truth** — Promote the accepted visual system to Figma, then drop exported tokens into [`prototype/src/design-tokens.css`](prototype/src/design-tokens.css). Components already read CSS custom properties only.
+6. **Figma source of truth** — Open [Northstar Ledger — Brand + Onboarding](https://www.figma.com/design/IAQuUlgWS7qdViPMqbAzsD). Design Mode can pull those components; push accepted tweaks back, then drop exported tokens into [`prototype/src/design-tokens.css`](prototype/src/design-tokens.css). Components already read CSS custom properties only. See [`figma/NORTHSTAR_FIGMA_SPEC.md`](figma/NORTHSTAR_FIGMA_SPEC.md).
 
 ## Prospect site — planted pain
 
@@ -82,6 +84,7 @@ npm run build   # tsc + vite build
 | --- | --- |
 | Scout the “before” site | Pages URL above, or `prospect-site/index.html` |
 | Walk the “after” onboarding | `npm run dev` in `prototype/` → port 43180 |
+| Brand kit + onboarding frames | [Figma — Brand + Onboarding](https://www.figma.com/design/IAQuUlgWS7qdViPMqbAzsD) |
 | This Cloud Agent run | [cursor.com/agents/bc-135810ed-e8f3-5c2b-8eee-28a05fbc7160](https://cursor.com/agents/bc-135810ed-e8f3-5c2b-8eee-28a05fbc7160) |
 | Customer-facing GitHub | [github.com/chloetroy-cursor/robosoft-fit-demo](https://github.com/chloetroy-cursor/robosoft-fit-demo) once published |
 
