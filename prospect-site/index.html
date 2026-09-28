@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Northstar Ledger — Spend control for mid-market ops</title>
+    <meta
+      name="description"
+      content="Northstar Ledger helps operations and finance teams see spend, route approvals, and close with fewer surprises."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1c1914;
+        --ink-soft: #4a453c;
+        --paper: #f6f1e8;
+        --paper-2: #efe8db;
+        --rule: #d8cfc0;
+        --gold: #b8860b;
+        --gold-deep: #8a6508;
+        --navy: #1e2a36;
+        --white: #fffdf8;
+        --shadow: 0 18px 40px rgba(28, 25, 20, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      .wrap {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(246, 241, 232, 0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 68px;
+        gap: 24px;
+      }
+
+      .mark {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      .star {
+        width: 22px;
+        height: 22px;
+        color: var(--gold);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        font-size: 0.95rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--ink-soft);
+      }
+
+      .nav-links a:hover {
+        color: var(--ink);
+      }
+
+      .ghost {
+        border: 1px solid var(--rule);
+        padding: 8px 12px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        color: var(--ink-soft);
+      }
+
+      hero,
+      .hero {
+        padding: 72px 0 48px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 48px;
+        align-items: end;
+      }
+
+      .eyebrow {
+        color: var(--gold-deep);
+        font-size: 0.78rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: Newsreader, Georgia, serif;
+        font-weight: 550;
+        letter-spacing: -0.03em;
+        line-height: 1.12;
+        margin: 10px 0 16px;
+      }
+
+      h1 {
+        font-size: clamp(2.4rem, 5vw, 4.3rem);
+      }
+
+      h2 {
+        font-size: clamp(1.8rem, 3vw, 2.6rem);
+      }
+
+      .lede {
+        font-size: 1.15rem;
+        color: var(--ink-soft);
+        max-width: 34rem;
+      }
+
+      .hero-actions {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-top: 28px;
+      }
+
+      .btn-quiet {
+        background: transparent;
+        color: var(--ink);
+        border: 0;
+        border-bottom: 1px solid var(--ink);
+        padding: 0 0 3px;
+        font: inherit;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .btn-quiet:hover {
+        color: var(--gold-deep);
+        border-color: var(--gold-deep);
+      }
+
+      .card {
+        background: var(--white);
+        border: 1px solid var(--rule);
+        box-shadow: var(--shadow);
+        border-radius: 18px;
+        padding: 22px;
+      }
+
+      .ledger-preview {
+        font-size: 0.9rem;
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--paper-2);
+      }
+
+      .row:last-child {
+        border-bottom: 0;
+      }
+
+      .muted {
+        color: var(--ink-soft);
+      }
+
+      .tag {
+        display: inline-block;
+        font-size: 0.72rem;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: var(--paper-2);
+      }
+
+      section {
+        padding: 72px 0;
+      }
+
+      .section-head {
+        max-width: 38rem;
+        margin-bottom: 36px;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+
+      .feature {
+        padding: 26px;
+        background: var(--white);
+        border: 1px solid var(--rule);
+        border-radius: 16px;
+      }
+
+      .feature h3 {
+        font-size: 1.45rem;
+        margin-bottom: 8px;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: start;
+      }
+
+      .quote {
+        font-family: Newsreader, Georgia, serif;
+        font-size: 1.55rem;
+        line-height: 1.3;
+        margin: 0 0 16px;
+      }
+
+      .pricing-box {
+        background: var(--navy);
+        color: #f4efe6;
+        padding: 36px;
+        border-radius: 18px;
+      }
+
+      .pricing-box h2,
+      .pricing-box p {
+        color: inherit;
+      }
+
+      .pricing-box p {
+        opacity: 0.82;
+      }
+
+      footer {
+        border-top: 1px solid var(--rule);
+        padding: 28px 0 48px;
+        color: var(--ink-soft);
+        font-size: 0.92rem;
+      }
+
+      .footer-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .tiny-cta {
+        color: var(--ink-soft);
+        font-size: 0.85rem;
+      }
+
+      @media (max-width: 860px) {
+        .hero-grid,
+        .features,
+        .split,
+        .nav-links {
+          grid-template-columns: 1fr;
+          display: grid;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .hero {
+          padding-top: 40px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="wrap nav-inner">
+        <a class="mark" href="#top">
+          <svg class="star" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 2.2 13.7 8l6.1.2-4.8 3.8 1.7 5.8L12 14.3 7.3 17.8 9 12 4.2 8.2 10.3 8z"
+            />
+          </svg>
+          Northstar Ledger
+        </a>
+        <div class="nav-links">
+          <a href="#platform">Platform</a>
+          <a href="#close">Month-end</a>
+          <a href="#customers">Customers</a>
+          <a href="#pricing">Pricing</a>
+          <a class="ghost" href="#notes">Company notes</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">For mid-market operations</p>
+          <h1>Keep spend visible before it becomes a close problem.</h1>
+          <p class="lede">
+            Northstar Ledger is a spend and expense system for ops and finance
+            teams who need one place to see cards, invoices, and policy — then
+            get back to running the business.
+          </p>
+          <div class="hero-actions">
+            <a class="btn-quiet" href="#platform">Explore the platform</a>
+            <span class="muted">or keep reading</span>
+          </div>
+        </div>
+        <aside class="card ledger-preview" aria-label="Sample ledger">
+          <p class="eyebrow">This week</p>
+          <h3>Operating spend</h3>
+          <div class="row">
+            <span>Field travel · Midwest</span>
+            <span>$18,440</span>
+          </div>
+          <div class="row">
+            <span>Software renewals</span>
+            <span>$9,210</span>
+          </div>
+          <div class="row">
+            <span>Facilities &amp; vendors</span>
+            <span>$6,080</span>
+          </div>
+          <div class="row">
+            <span class="muted">Uncoded receipts</span>
+            <span class="tag">12 waiting</span>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <section id="platform">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">What it covers</p>
+          <h2>A quieter way to run spend, expenses, and approvals.</h2>
+          <p class="lede">
+            Built for operators who inherited three tools, a shared inbox, and a
+            spreadsheet named FINAL_v7.
+          </p>
+        </div>
+        <div class="features">
+          <article class="feature">
+            <h3>Cards and invoices in one ledger</h3>
+            <p>
+              Corporate cards, reimbursements, and vendor bills land in the same
+              view so nobody is reconciling across tabs at 6pm.
+            </p>
+          </article>
+          <article class="feature">
+            <h3>Policy that people can actually follow</h3>
+            <p>
+              Thresholds, categories, and entity rules sit next to the request —
+              not in a PDF last updated two fiscal years ago.
+            </p>
+          </article>
+          <article class="feature">
+            <h3>Approvals that move</h3>
+            <p>
+              Route by team, amount, or vendor. Nudges exist. They are polite.
+              They are also persistent.
+            </p>
+          </article>
+          <article class="feature">
+            <h3>A close that is less of a scavenger hunt</h3>
+            <p>
+              Coding, receipts, and exceptions stay attached to the spend so
+              controllers are not chasing Slack threads.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="close">
+      <div class="wrap split">
+        <div>
+          <p class="eyebrow">Month-end</p>
+          <h2>Close should not depend on who remembered to photograph a lunch.</h2>
+          <p class="lede">
+            Northstar keeps the messy middle — missing memos, split coding,
+            “I’ll send the receipt Monday” — visible enough that finance can
+            finish the period.
+          </p>
+        </div>
+        <div class="card">
+          <p class="eyebrow">Exception queue</p>
+          <div class="row">
+            <span>Missing receipt · AMEX *4412</span>
+            <span class="tag">4 days</span>
+          </div>
+          <div class="row">
+            <span>Over-policy lodging · Denver</span>
+            <span class="tag">Needs VP</span>
+          </div>
+          <div class="row">
+            <span>Vendor duplicate · Northwind</span>
+            <span class="tag">Review</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="customers">
+      <div class="wrap split">
+        <div>
+          <p class="eyebrow">Teams</p>
+          <h2>Used by operators who prefer fewer surprises.</h2>
+          <p class="lede">
+            Northstar is in use at a handful of mid-market companies. We do not
+            publish a logo wall. People tend to find us through other operators.
+          </p>
+        </div>
+        <blockquote>
+          <p class="quote">
+            “It is fine. We can see what we spent, which is more than we could
+            say last year.”
+          </p>
+          <footer class="muted">— A finance lead at a 400-person company</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="wrap">
+        <div class="pricing-box">
+          <p class="eyebrow">Pricing</p>
+          <h2>Plans that fit how your team already works.</h2>
+          <p>
+            We work with mid-market operations groups. Pricing depends on seats,
+            entities, card volume, and which systems you already have. Some
+            teams start small. Some do not. We will find a package that makes
+            sense after we understand the workflow.
+          </p>
+          <p>Annual and multi-entity conversations are available on request.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="notes">
+      <div class="wrap">
+        <p class="eyebrow">Company</p>
+        <h2>A short note from the team</h2>
+        <p class="lede">
+          Northstar Ledger is based in the Midwest and builds software for
+          people who run the operational backbone of a company — not the
+          slide deck. If you want a walkthrough, someone on the team can
+          usually find time.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap footer-row">
+        <span>© 2026 Northstar Ledger. All rights reserved.</span>
+        <a class="tiny-cta" href="mailto:hello@northstarledger.example"
+          >If you want to talk, write us.</a
+        >
+      </div>
+    </footer>
+  </body>
+</html>
