@@ -1,17 +1,10 @@
 /**
  * Northstar Ledger — design tokens
  *
- * This file is the single visual contract for the onboarding prototype.
- * When Figma becomes source of truth, overwrite these custom properties
- * (or replace this file) with the exported token set. Do not hard-code
- * colors, type, or spacing in components.
- *
- * Suggested Figma → CSS mapping:
- *   color/bg/canvas          → --color-bg
- *   color/fg/primary         → --color-fg
- *   color/accent/gold        → --color-accent
- *   font/family/display      → --font-display
- *   space/4                  → --space-4
+ * Source of truth: Figma file IAQuUlgWS7qdViPMqbAzsD
+ * (Cover / Tokens / Components / Flows) and figma/tokens.json.
+ * Sampled from the live marketing site. Do not invent brand values
+ * or hard-code hex in components — use these custom properties.
  */
 
 :root {
@@ -19,7 +12,7 @@
   --color-bg-elevated: #fffdf8;
   --color-bg-muted: #efe8db;
   --color-fg: #1c1914;
-  --color-fg-muted: #5c564c;
+  --color-fg-muted: #4a453c;
   --color-accent: #b8860b;
   --color-accent-deep: #8a6508;
   --color-navy: #1e2a36;
@@ -27,17 +20,25 @@
   --color-good: #2f6b4f;
   --color-warn: #9a5b12;
   --color-danger: #8f2d2d;
+  --color-on-navy: #f4efe6;
 
   --font-display: "Newsreader", Georgia, serif;
   --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
   --font-size-xs: 0.75rem;
+  --font-size-tag: 0.72rem;
   --font-size-sm: 0.9rem;
+  --font-size-eyebrow: 0.78rem;
   --font-size-md: 1rem;
+  --font-size-lede: 1.15rem;
   --font-size-lg: 1.25rem;
   --font-size-xl: 2rem;
   --font-size-2xl: 2.75rem;
-  --line-tight: 1.15;
-  --line-body: 1.5;
+  --line-tight: 1.12;
+  --line-body: 1.55;
+  --letter-display: -0.03em;
+  --letter-brand: -0.02em;
+  --letter-eyebrow: 0.16em;
+  --letter-status: 0.08em;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -47,12 +48,15 @@
   --space-6: 32px;
   --space-7: 48px;
   --space-8: 72px;
+  --space-card: 22px;
+  --space-nav: 68px;
 
   --radius-sm: 8px;
   --radius-md: 14px;
+  --radius-card: 18px;
   --radius-lg: 20px;
   --radius-pill: 999px;
 
-  --shadow-card: 0 16px 36px rgba(28, 25, 20, 0.08);
+  --shadow-card: 0 18px 40px rgba(28, 25, 20, 0.08);
   --max-width: 920px;
 }

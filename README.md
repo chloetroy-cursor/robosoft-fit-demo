@@ -10,6 +10,8 @@ The live GitHub target for customers is intended to be **[chloetroy-cursor/robos
 | --- | --- |
 | [`prospect-site/index.html`](prospect-site/index.html) | Static marketing page. No build. Intentional gaps for the scout. |
 | [`prototype/`](prototype/) | Vite + React + TypeScript onboarding redesign: welcome → connect tools → first dashboard. |
+| [Figma file](https://www.figma.com/design/IAQuUlgWS7qdViPMqbAzsD) | **Northstar Ledger — Brand + Onboarding** (Cover, Tokens, Components, Flows). |
+| [`figma/`](figma/) | Token JSON, star SVG, and a spec that mirrors that file. |
 
 ## Demo flow
 
@@ -18,7 +20,7 @@ The live GitHub target for customers is intended to be **[chloetroy-cursor/robos
 3. **Human `fit: yes`** — A person confirms the account is worth a prototype. That gate is the point; the bot does not ship work on its own.
 4. **Cursor Cloud Agent prototypes** — Agent builds or iterates `prototype/` from the scout notes (this repo is that output).
 5. **Design Mode** — Restyle the onboarding shell in the IDE against the running Vite app.
-6. **Figma source of truth** — Promote the accepted visual system to Figma, then drop exported tokens into [`prototype/src/design-tokens.css`](prototype/src/design-tokens.css). Components already read CSS custom properties only.
+6. **Figma source of truth** — Open [Northstar Ledger — Brand + Onboarding](https://www.figma.com/design/IAQuUlgWS7qdViPMqbAzsD). Design Mode can pull those components; push accepted tweaks back, then drop exported tokens into [`prototype/src/design-tokens.css`](prototype/src/design-tokens.css). Components already read CSS custom properties only. See [`figma/NORTHSTAR_FIGMA_SPEC.md`](figma/NORTHSTAR_FIGMA_SPEC.md).
 
 ## Prospect site — planted pain
 
@@ -65,11 +67,11 @@ Dev server binds to **http://127.0.0.1:43180**.
 
 Flow:
 
-1. **Welcome** — name, company, role. Empty name/company is blocked.
-2. **Connect tools** — Slack, NetSuite, cards, bank, receipt inbox. Connections are mocked.
-3. **First dashboard** — KPIs and a short ledger if anything is connected; empty state if not.
+1. **Welcome** — name, company, role. Prefills Jordan Hale / Harborline Goods. Empty name/company is blocked.
+2. **Connect tools** — Slack, NetSuite, cards, bank, receipt inbox. Connections are mocked. Cards and bank start connected.
+3. **First dashboard** — KPIs, the marketing “this week” spend card, and the exception queue (missing receipts / over-policy / duplicates). Empty state if nothing is connected.
 
-Visual values live in `prototype/src/design-tokens.css`. Swap that file when Figma tokens are ready. Do not scatter hex values through components.
+Visual values live in `prototype/src/design-tokens.css`, mapped from the Figma kit and [`figma/tokens.json`](figma/tokens.json). Do not scatter hex values through components.
 
 ```bash
 cd prototype
@@ -82,7 +84,8 @@ npm run build   # tsc + vite build
 | --- | --- |
 | Scout the “before” site | Pages URL above, or `prospect-site/index.html` |
 | Walk the “after” onboarding | `npm run dev` in `prototype/` → port 43180 |
-| This Cloud Agent run | [cursor.com/agents/bc-135810ed-e8f3-5c2b-8eee-28a05fbc7160](https://cursor.com/agents/bc-135810ed-e8f3-5c2b-8eee-28a05fbc7160) |
+| Brand kit + onboarding frames | [Figma — Brand + Onboarding](https://www.figma.com/design/IAQuUlgWS7qdViPMqbAzsD) |
+| This Cloud Agent run | [cursor.com/agents/bc-03f228d7-ad7e-5465-94a1-eadcf7c2fbfa](https://cursor.com/agents/bc-03f228d7-ad7e-5465-94a1-eadcf7c2fbfa) |
 | Customer-facing GitHub | [github.com/chloetroy-cursor/robosoft-fit-demo](https://github.com/chloetroy-cursor/robosoft-fit-demo) once published |
 
 This workspace is a new project. Create the GitHub repo from the **Create repo** control, then mirror or push to `chloetroy-cursor/robosoft-fit-demo` when that remote is ready.
