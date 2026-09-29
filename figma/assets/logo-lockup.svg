@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="32" viewBox="0 0 220 32" fill="none" role="img" aria-label="Northstar Ledger">
+  <path
+    fill="#b8860b"
+    d="M16 3.2 17.7 9l6.1.2-4.8 3.8 1.7 5.8L16 15.3 11.3 18.8 13 13 8.2 9.2 14.3 9z"
+  />
+  <text
+    x="38"
+    y="21"
+    fill="#1c1914"
+    font-family="IBM Plex Sans, Segoe UI, sans-serif"
+    font-size="16"
+    font-weight="600"
+    letter-spacing="-0.32"
+  >Northstar Ledger</text>
+</svg>

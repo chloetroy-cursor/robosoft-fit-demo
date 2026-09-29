@@ -1,4 +1,12 @@
 import { useMemo, useState } from "react";
+import {
+  Button,
+  ExceptionQueue,
+  SelectInput,
+  SpendSummaryCard,
+  TextInput,
+  Topbar,
+} from "./kit";
 
 type Step = "welcome" | "connect" | "dashboard";
 
@@ -18,19 +26,17 @@ const TOOLS: Tool[] = [
   { id: "inbox", name: "Receipt inbox", detail: "Forwarded receipts and invoice mail" },
 ];
 
-const STEPS: Step[] = ["welcome", "connect", "dashboard"];
-
 export default function App() {
   const [step, setStep] = useState<Step>("welcome");
-  const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
+  const [name, setName] = useState("Jordan Hale");
+  const [company, setCompany] = useState("Harborline Goods");
   const [role, setRole] = useState("Head of Operations");
   const [error, setError] = useState("");
   const [connected, setConnected] = useState<Record<ToolId, boolean>>({
     slack: false,
     netsuite: false,
-    cards: false,
-    bank: false,
+    cards: true,
+    bank: true,
     inbox: false,
   });
   const [busy, setBusy] = useState<ToolId | null>(null);
@@ -62,82 +68,55 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <header className="topbar">
-        <div className="brand">
-          <svg className="star" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              fill="currentColor"
-              d="M12 2.2 13.7 8l6.1.2-4.8 3.8 1.7 5.8L12 14.3 7.3 17.8 9 12 4.2 8.2 10.3 8z"
-            />
-          </svg>
-          Northstar Ledger
-        </div>
-        <ol className="steps">
-          {STEPS.map((id) => (
-            <li key={id} className={step === id ? "is-active" : undefined}>
-              {id === "welcome" && "1 Welcome"}
-              {id === "connect" && "2 Connect tools"}
-              {id === "dashboard" && "3 First dashboard"}
-            </li>
-          ))}
-        </ol>
-      </header>
+      <Topbar current={step} />
 
       {step === "welcome" && (
         <section className="panel">
           <p className="lede">Onboarding redesign · 3 minutes</p>
-          <h1>Set up a workspace your close team will actually open.</h1>
+          <h1>Set up your workspace.</h1>
           <p className="lede">
-            This path replaces the marketing site’s buried “write us” loop with a
+            This path replaces the marketing site’s buried write-us loop with a
             first-run that names an owner, connects the systems ops already
             uses, and lands on a real spend view.
           </p>
-          <div className="field">
-            <label htmlFor="name">Your name</label>
-            <input
-              id="name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              placeholder="Jordan Hale"
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="company">Company</label>
-            <input
-              id="company"
-              value={company}
-              onChange={(event) => setCompany(event.target.value)}
-              placeholder="Harborline Goods"
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="role">Role</label>
-            <select
-              id="role"
-              value={role}
-              onChange={(event) => setRole(event.target.value)}
-            >
-              <option>Head of Operations</option>
-              <option>Controller</option>
-              <option>FP&A lead</option>
-              <option>Office of the COO</option>
-            </select>
-          </div>
+          <TextInput
+            id="name"
+            label="Your name"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            placeholder="Jordan Hale"
+          />
+          <TextInput
+            id="company"
+            label="Company"
+            value={company}
+            onChange={(event) => setCompany(event.target.value)}
+            placeholder="Harborline Goods"
+          />
+          <SelectInput
+            id="role"
+            label="Role"
+            value={role}
+            onChange={(event) => setRole(event.target.value)}
+          >
+            <option>Head of Operations</option>
+            <option>Controller</option>
+            <option>FP&A lead</option>
+            <option>Office of the COO</option>
+          </SelectInput>
           {error && <p className="error">{error}</p>}
           <div className="actions">
-            <button className="btn" type="button" onClick={goConnect}>
-              Continue
-            </button>
+            <Button onClick={goConnect}>Continue</Button>
           </div>
         </section>
       )}
 
       {step === "connect" && (
         <section className="panel">
-          <h1>Connect the tools {company || "your team"} already lives in.</h1>
+          <h1>Connect the tools {company.trim() || "your team"} already lives in.</h1>
           <p className="lede">
-            Nothing syncs for real in this demo. Toggle a source so the first
-            dashboard has something to show.
+            Nothing syncs for real in this demo. Cards and bank are on so the
+            first dashboard has a feed.
           </p>
           <div className="tool-list">
             {TOOLS.map((tool) => {
@@ -148,30 +127,27 @@ export default function App() {
                     <h3>{tool.name}</h3>
                     <p>{tool.detail}</p>
                   </div>
-                  <div>
+                  <div className="tool-action">
                     <div className={`status${on ? " is-on" : ""}`}>
                       {busy === tool.id ? "Working…" : on ? "Connected" : "Not connected"}
                     </div>
-                    <button
-                      className={on ? "btn btn-secondary" : "btn"}
-                      type="button"
+                    <Button
+                      variant={on ? "secondary" : "primary"}
                       onClick={() => toggleTool(tool.id)}
                       disabled={busy === tool.id}
                     >
                       {on ? "Disconnect" : "Connect"}
-                    </button>
+                    </Button>
                   </div>
                 </article>
               );
             })}
           </div>
           <div className="actions">
-            <button className="btn-secondary btn" type="button" onClick={() => setStep("welcome")}>
+            <Button variant="secondary" onClick={() => setStep("welcome")}>
               Back
-            </button>
-            <button className="btn" type="button" onClick={() => setStep("dashboard")}>
-              Open dashboard
-            </button>
+            </Button>
+            <Button onClick={() => setStep("dashboard")}>Open dashboard</Button>
           </div>
         </section>
       )}
@@ -179,7 +155,7 @@ export default function App() {
       {step === "dashboard" && (
         <section className="panel">
           <p className="lede">
-            {name || "Workspace owner"} · {role} · {company || "Unnamed company"}
+            {name.trim() || "Workspace owner"} · {role} · {company.trim() || "Unnamed company"}
           </p>
           <h1>Here is what close looks like when spend is in one place.</h1>
 
@@ -204,51 +180,22 @@ export default function App() {
                   <strong>{connectedCount}</strong>
                 </div>
               </div>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Merchant</th>
-                    <th>Source</th>
-                    <th>Status</th>
-                    <th>Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Midwest Air</td>
-                    <td>{connected.cards ? "Corporate cards" : "Manual"}</td>
-                    <td>Needs receipt</td>
-                    <td>$842.10</td>
-                  </tr>
-                  <tr>
-                    <td>Northwind Facilities</td>
-                    <td>{connected.netsuite ? "NetSuite" : "Inbox"}</td>
-                    <td>Duplicate risk</td>
-                    <td>$4,200.00</td>
-                  </tr>
-                  <tr>
-                    <td>Harborline payroll tax</td>
-                    <td>{connected.bank ? "Bank feed" : "Uncoded"}</td>
-                    <td>Posted</td>
-                    <td>$18,440.00</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="dashboard-grid">
+                <SpendSummaryCard />
+                <ExceptionQueue />
+              </div>
             </>
           )}
 
           <div className="actions">
-            <button className="btn-secondary btn" type="button" onClick={() => setStep("connect")}>
+            <Button variant="secondary" onClick={() => setStep("connect")}>
               Adjust connections
-            </button>
-            <button className="btn" type="button" onClick={() => setStep("welcome")}>
-              Restart setup
-            </button>
+            </Button>
+            <Button onClick={() => setStep("welcome")}>Restart setup</Button>
           </div>
           <p className="demo-note">
-            Tokens live in <code>src/design-tokens.css</code>. In Design Mode,
-            restyle this shell, then promote the values into Figma as source of
-            truth and drop the export back here.
+            Fake mid-market spend only. Tokens live in{" "}
+            <code>src/design-tokens.css</code> and the Figma kit.
           </p>
         </section>
       )}
