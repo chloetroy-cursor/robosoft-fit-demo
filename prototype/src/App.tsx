@@ -73,7 +73,7 @@ export default function App() {
       {step === "welcome" && (
         <section className="panel">
           <p className="lede">Onboarding redesign · 3 minutes</p>
-          <h1>Set up a workspace your close team will actually open.</h1>
+          <h1>Set up your workspace.</h1>
           <p className="lede">
             This path replaces the marketing site’s buried write-us loop with a
             first-run that names an owner, connects the systems ops already

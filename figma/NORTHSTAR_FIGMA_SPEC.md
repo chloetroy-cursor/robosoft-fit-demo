@@ -37,7 +37,7 @@ All use Auto Layout. Colors, radii, and gaps bind to `Northstar / Primitives` an
 
 - Steps: **1 Welcome** · 2 Connect tools · 3 First dashboard
 - Eyebrow: Onboarding redesign · 3 minutes
-- H1: Set up a workspace your close team will actually open.
+- H1: Set up your workspace.
 - Lede: This path replaces the marketing site’s buried write-us loop with a first-run that names an owner, connects the systems ops already uses, and lands on a real spend view.
 - Fields: Your name → Jordan Hale; Company → Harborline Goods; Role → Head of Operations
 - CTA: Continue
